@@ -60,15 +60,18 @@ def remove_self_hits(database):
     print_to_system("Removed " + self_hits_count + " self hits!")
     return(database)
 
-#Calculate the identity cut off to provide on average 5 edges per node from the provided database
+#Calculate the identity cut off to provide on average 3 edges per node from the provided database
 def calculate_threshold(database):
     print_to_system("Calculating identity hreshold...")
     number_of_queries = database['query'].nunique()
-    reccommended_cut_off = len(database.index) - (number_of_queries*5) #we want to exclude until we have n queries*3
+    reccommended_cut_off = len(database.index) - (number_of_queries*3) #we want to exclude until we have n queries*3
     #We will now use a histogram to calculate the threshold
     database_size = len(database.index)
     counts, bins = np.histogram(database.loc[:,"identity"], bins=database_size) #each entry has a bin
-    threshold = bins[reccommended_cut_off]
+    for i in np.cumsum(counts):
+        if  i > reccommended_cut_off:
+            threshold  = bins[i]
+            break
     print_to_system("Recommended threshold calculated at " + str(threshold) + "% identity.")
     return(threshold)
 
@@ -120,6 +123,8 @@ def generate_network(database):
     #save and show the network with an appropriate name
     net_name = sys.argv[1].split('.')[0] + '.html'
     prot_net.show(net_name)
+    ##########################################ADD IN WRITE AS CSV FEATURE
+    #save node list
     nodes_name = sys.argv[1].split('.')[0] + '.txt'
     write_to_file(node_list, nodes_name)
     print_to_system("Network saved as " + net_name + "!")
