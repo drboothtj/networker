@@ -2,7 +2,7 @@
 
 ## Description
 
-This repository contains scripts to create and analyse protein identity networks.
+This repository contains scripts to create and analyse protein (or nucleotide) identity networks.
 
 ## Scirpts
 
@@ -10,7 +10,8 @@ This repository contains scripts to create and analyse protein identity networks
 **Usage:**
 `python networker.py diamondorblastdatabase.tsv`
 
-If provided with a DIAMOND or BLAST database, 'networker.py' will produce a protein identity network ('xxx.html'). It is recommended to make an all-vs-all comparison. 
+If provided with a DIAMOND or BLAST database, 'networker.py' will produce a protein/nucleotide identity network ('xxx.html') and a list of nodes used in the network ('xxx.txt'). 
+It is recommended to make an all-vs-all comparison. 
 The output must have the format: `qseqid | sseqid | pident`
 
 For example, to make a usable DIAMOND search:
@@ -26,6 +27,9 @@ WIP
 
 ### 3. histogramer.py
 WIP
+
+## Example Data
+Example data and output can be found in the example_data folder. The file example.faa was used to generate the DIAMOND database and, subsequentally, the network ('example.html') and the node list ('example.txt').
 
 ## To Do
 1. Add a wrapper so that the input can be simplified to a fasta file.
