@@ -7,10 +7,17 @@ This repository contains scripts to create and analyse protein identity networks
 ## Scirpts
 
 ### 1. networker.py
+**Usage:**
+`python networker.py diamondorblastdatabase.tsv`
 
-At current, it contains only 'networker.py'.
+If provided with a DIAMOND or BLAST database, 'networker.py' will produce a protein identity network ('xxx.html'). It is recommended to make an all-vs-all comparison. 
+The output must have the format: `qseqid | sseqid | pident`
 
-If provided with a DIAMOND or BLAST database, 'networker.py' will produce a protein identity network. It is recommended to make an all-vs-all comparison. 
+For example, to make a usable DIAMOND search:
+
+`diamond makedb --db example --in example.faa`
+
+`diamond blastp --db example --query example.faa --out example.tsv --outfmt 6 qseqid sseqid pident`
 
 All steps are currently automatic, including thresholding. However, the recommended threshold should work for most putposes. In future, you will be able to provide a custom threshold.
 
