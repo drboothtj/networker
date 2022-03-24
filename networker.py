@@ -50,6 +50,7 @@ def handle_files(filename):
     elif extension != 'tsv':
         print_to_system("ERROR: Please provide files with the extension .faa or .tsv only.")
         quit()
+    return(filename)
 
 #create a diamond database from the .faa
 def make_diamond_database(filename):
@@ -173,7 +174,7 @@ def main():
     #Get the argument
     filename = check_arguments(sys.argv)
     #Handle the files an process apropriately.
-    handle_files(filename)
+    filename = handle_files(filename)
     #Read the supplied database file as database
     database = read_tsv(filename)
     #remove self hits from the database
