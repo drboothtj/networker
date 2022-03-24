@@ -160,7 +160,6 @@ def generate_network(database):
     #save and show the network with an appropriate name
     net_name = sys.argv[1].split('.')[0] + '.html'
     prot_net.show(net_name)
-    ##########################################ADD IN WRITE AS CSV FEATURE
     #save node list
     nodes_name = sys.argv[1].split('.')[0] + '.txt'
     write_to_file(node_list, nodes_name)
