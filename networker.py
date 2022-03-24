@@ -2,6 +2,7 @@
 
 #Import the following:
 import sys
+import subprocess
 import numpy as np
 import pandas as pd
 from datetime import datetime
@@ -21,17 +22,49 @@ def write_to_file(write_lines, write_name):
         f.write(line + '\n')
     f.close()         
 
+def run_in_command_line(command):
+    command = command.split(" ")
+    process = subprocess.Popen(command, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT) 
+    process.communicate()
+    return process
+
 #Check the required arguments
 def check_arguments(arguments):
     number_of_arguments = len(arguments)
     if number_of_arguments > 2:
-        print("Too many arguments!")
+        print_to_system("Too many arguments!")
         quit()
     elif number_of_arguments < 0:
-        print("Too few arguments!")
+        print_to_system("Too few arguments!")
         quit()
     else:
-        print_to_system("Creating a network from " + arguments[1] + "...") 
+        print_to_system("Creating a network from " + arguments[1] + "...")
+        return arguments[1]
+
+#create a diamond database from the .faa
+def make_diamond_database():
+    global FILENAME
+    print_to_system('Making DIAMOND database...')
+    makedb = "diamond makedb"
+    input_ = " --in " + FILENAME + "" 
+    database = " --db " + FILENAME.split('.')[0] + ".dmnd"
+    pipe = " > diamond_log.txt"
+    command = makedb + database + input_
+    run_in_command_line(command)    
+
+#run blastp 
+def run_diamond_search(): ##neaten this code!
+    global FILENAME    
+    print_to_system('Running DIAMOND blastP...')
+    blastp = "diamond blastp"
+    query = " --query " + FILENAME
+    database = " --db " + FILENAME.split('.')[0] + ".dmnd"
+    output = " --out " + FILENAME.split('.')[0] + ".tsv"
+    outfmt = " --outfmt 6 qseqid sseqid pident"
+    pipe = " > blastp_log.txt"
+    command = blastp + database + query + output + outfmt 
+    run_in_command_line(command)   
+    FILENAME = FILENAME.split('.')[0] + ".tsv"
 
 #Read the database file and clean the data
 def read_tsv(database_file):
@@ -135,22 +168,27 @@ def generate_network(database):
 #Print welcome message
 print_to_system("Running Networker version 0.0.1") 
 
-#Check the required arguments are present
-check_arguments(sys.argv)
+#Get the argument 
+FILENAME = check_arguments(sys.argv)
 
+#Process fastafile
+if FILENAME.split('.')[1] == 'faa':
+    make_diamond_database()
+    run_diamond_search()
+ 
 #Read the supplied database file as database
-database = read_tsv(sys.argv[1])
+DATABASE = read_tsv(FILENAME)
 
 #remove self hits from the database
-database = remove_self_hits(database)
+DATABASE = remove_self_hits(DATABASE)
 
 #using the data in database calculate an appropriate identity threshold for the network
-threshold = calculate_threshold(database)
+THRESHOLD = calculate_threshold(DATABASE)
 
 #remove data from database below the threshold
-database = remove_data_under_threshold(database, threshold)
+DATABASE = remove_data_under_threshold(DATABASE, THRESHOLD)
 
 #generate the network
-generate_network(database)
+generate_network(DATABASE)
     
     
