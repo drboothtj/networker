@@ -32,10 +32,11 @@ WIP
 Example data and output can be found in the example_data folder. The file example.faa was used to generate the DIAMOND database and, subsequentally, the network ('example.html') and the node list ('example.txt').
 
 ## To Do
-1. Add a wrapper so that the input can be simplified to a fasta file.
-2. Enable custom thresholds.
-3. Create 'histogramer.py' to assist with threshold analysis.
-4. Write the network file in a readable format.
-5. Create 'subnetworker.py' for analysing subnetworks. 
-6. Compile into software package.
+1. Fix threshold algorithm.
+2. Add a wrapper so that the input can be simplified to a fasta file.
+3. Enable custom thresholds.
+4. Create 'histogramer.py' to assist with threshold analysis.
+5. Write the network file in a readable format.
+6. Create 'subnetworker.py' for analysing subnetworks. 
+7. Compile into software package.
 
