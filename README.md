@@ -8,7 +8,11 @@ This repository contains scripts to create and analyse protein (or nucleotide) i
 
 ### 1. networker.py
 **Usage:**
+
 `python networker.py proteinseqs.faa`
+
+or,
+
 `python networker.py diamondorblastdatabase.tsv`
 
 If provided with a DIAMOND or BLAST table (.tsv), or an amino acid fasta file (.faa) 'networker.py' will produce a protein/nucleotide identity network ('xxx.html') and a list of nodes used in the network ('xxx.txt'). 
