@@ -17,14 +17,14 @@ def print_to_system(string_to_print):
     print(current_time + string_to_print)
 
 def write_to_file(write_lines, write_name):
-    f = open(write_name, "a")
+    file = open(write_name, "a")
     for line in write_lines:
-        f.write(line + '\n')
-    f.close()         
+        file.write(line + '\n')
+    file.close()
 
 def run_in_command_line(command):
     command = command.split(" ")
-    process = subprocess.Popen(command, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT) 
+    process = subprocess.Popen(command, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
     process.communicate()
     return process
 
@@ -32,81 +32,85 @@ def run_in_command_line(command):
 def check_arguments(arguments):
     number_of_arguments = len(arguments)
     if number_of_arguments > 2:
-        print_to_system("Too many arguments!")
+        print_to_system("ERROR: Too many arguments! Please provide only the filename.")
         quit()
     elif number_of_arguments < 0:
-        print_to_system("Too few arguments!")
+        print_to_system("ERROR: Too few arguments! Please provide only the filename.")
         quit()
     else:
         print_to_system("Creating a network from " + arguments[1] + "...")
         return arguments[1]
 
+def handle_files(filename):
+    extension = filename.split('.')[1]
+    if extension == 'faa':
+        make_diamond_database(filename)
+        run_diamond_search(filename)
+        filename = filename.split('.')[0] + ".tsv"
+    elif extension != 'tsv':
+        print_to_system("ERROR: Please provide files with the extension .faa or .tsv only.")
+        quit()
+
 #create a diamond database from the .faa
-def make_diamond_database():
-    global FILENAME
+def make_diamond_database(filename):
     print_to_system('Making DIAMOND database...')
     makedb = "diamond makedb"
-    input_ = " --in " + FILENAME + "" 
-    database = " --db " + FILENAME.split('.')[0] + ".dmnd"
-    pipe = " > diamond_log.txt"
+    input_ = " --in " + filename + ""
+    database = " --db " + filename.split('.')[0] + ".dmnd"
     command = makedb + database + input_
-    run_in_command_line(command)    
+    run_in_command_line(command)
 
-#run blastp 
-def run_diamond_search(): ##neaten this code!
-    global FILENAME    
+#run blastp
+def run_diamond_search(filename): ##neaten this code!
     print_to_system('Running DIAMOND blastP...')
     blastp = "diamond blastp"
-    query = " --query " + FILENAME
-    database = " --db " + FILENAME.split('.')[0] + ".dmnd"
-    output = " --out " + FILENAME.split('.')[0] + ".tsv"
+    query = " --query " + filename
+    database = " --db " + filename.split('.')[0] + ".dmnd"
+    output = " --out " + filename.split('.')[0] + ".tsv"
     outfmt = " --outfmt 6 qseqid sseqid pident"
-    pipe = " > blastp_log.txt"
-    command = blastp + database + query + output + outfmt 
-    run_in_command_line(command)   
-    FILENAME = FILENAME.split('.')[0] + ".tsv"
+    command = blastp + database + query + output + outfmt
+    run_in_command_line(command)
 
 #Read the database file and clean the data
 def read_tsv(database_file):
     #read the tsv
     print_to_system("Reading " + database_file + "...")
     database = pd.read_csv(database_file, sep='\t', header=None)
-    database.columns = ['query','subject','identity']
+    database.columns = ['query', 'subject', 'identity']
     print_to_system("Read " + database_file + "!")
-    return(database)
-    
+    return database
 
-#Clean the data from selfhits and set an appropriate threshold 
+#Clean the data from selfhits and set an appropriate threshold
 def remove_self_hits(database):
     #first remove self hits
     print_to_system("Removing self hits...")
     self_hits = []
     for i in database.index:
-            query = database['query'][i]
-            subject = database['subject'][i]
-            if query == subject:
-                self_hits.append(i)
+        query = database['query'][i]
+        subject = database['subject'][i]
+        if query == subject:
+            self_hits.append(i)
     size_before = len(database.index)
     database = database.drop(self_hits)
     size_after = len(database.index)
     self_hits_count = str(size_before - size_after)
     print_to_system("Removed " + self_hits_count + " self hits!")
-    return(database)
+    return database
 
 #Calculate the identity cut off to provide on average 3 edges per node from the provided database
 def calculate_threshold(database):
     print_to_system("Calculating identity hreshold...")
     number_of_queries = database['query'].nunique()
-    reccommended_cut_off = len(database.index) - (number_of_queries*3) #we want to exclude until we have n queries*3
+    reccommended_cut_off = len(database.index) - (number_of_queries*3)
     #We will now use a histogram to calculate the threshold
     database_size = len(database.index)
-    counts, bins = np.histogram(database.loc[:,"identity"], bins=database_size) #each entry has a bin
+    counts, bins = np.histogram(database.loc[:, "identity"], bins=database_size)
     for i in np.cumsum(counts):
         if  i > reccommended_cut_off:
-            threshold  = bins[i]
+            threshold = bins[i]
             break
     print_to_system("Recommended threshold calculated at " + str(threshold) + "% identity.")
-    return(threshold)
+    return threshold
 
 #remove anything below the define identity threshold from the database
 def remove_data_under_threshold(database, threshold):
@@ -119,10 +123,10 @@ def remove_data_under_threshold(database, threshold):
     size_before = len(database.index)
     database = database.drop(below_threshold)
     size_after = len(database.index)
-    return(database)
-    print_to_system(str(size_before - size_after) + " hits fall below the threshold and have been removed!")
+    print_to_system(str(size_before - size_after) + " hits below the threshold and have been removed!")
+    return database
 
-#Generate the protein identity network from the remaining data.            
+#Generate the protein identity network from the remaining data.
 def generate_network(database):
     print_to_system("Generating network...")
     colourme = 'BGC' #nodes starting with this string will be colored red
@@ -130,19 +134,19 @@ def generate_network(database):
     prot_net = Network(height='100%', width='75%', bgcolor='white', font_color='black')
     prot_net.barnes_hut()
     prot_net.show_buttons(filter_=True)
-    #parse database 
+    #parse database
     sources = database['query']
     targets = database['subject']
     weights = database['identity']
     edge_data = zip(sources, targets, weights)
     #build database from parsed data
-    for e in edge_data:
-        src = e[0]
-        dst = e[1]
-        w = e[2]
-        prot_net.add_node(src, src, title=src)
-        prot_net.add_node(dst, dst, title=dst)
-        prot_net.add_edge(src, dst, value=w)
+    for edge in edge_data:
+        source = edge[0]
+        destination = edge[1]
+        weight = edge[2]
+        prot_net.add_node(source, source, title=source)
+        prot_net.add_node(destination, destination, title=destination)
+        prot_net.add_edge(source, destination, value=weight)
     #Add neihbour info and colour nodes. Also build a list of nodes to be output.
     neighbor_map = prot_net.get_adj_list()
     node_list = []
@@ -151,7 +155,7 @@ def generate_network(database):
         numberofneighbours = len(neighbor_map[node['id']])
         node['title'] += '<br>' + str(numberofneighbours) + ' neighbors:<br>' + '<br>'.join(neighbor_map[node['id']])
         node['value'] = numberofneighbours
-        if (colourme in node['id']):
+        if colourme in node['id']:
             node['color'] = 'red'
     #save and show the network with an appropriate name
     net_name = sys.argv[1].split('.')[0] + '.html'
@@ -164,31 +168,23 @@ def generate_network(database):
     print_to_system("A list of nodes has been saved as " + nodes_name + "!") 
       
 ###Workflow###
+def main():
+    #Print welcome message
+    print_to_system("Running Networker version 0.0.1")
+    #Get the argument
+    filename = check_arguments(sys.argv)
+    #Handle the files an process apropriately.
+    handle_files(filename)
+    #Read the supplied database file as database
+    database = read_tsv(filename)
+    #remove self hits from the database
+    database = remove_self_hits(database)
+    #using the data in database calculate an appropriate identity threshold for the network
+    threshold = calculate_threshold(database)
+    #remove data from database below the threshold
+    database = remove_data_under_threshold(database, threshold)
+    #generate the network
+    generate_network(database)
 
-#Print welcome message
-print_to_system("Running Networker version 0.0.1") 
-
-#Get the argument 
-FILENAME = check_arguments(sys.argv)
-
-#Process fastafile
-if FILENAME.split('.')[1] == 'faa':
-    make_diamond_database()
-    run_diamond_search()
- 
-#Read the supplied database file as database
-DATABASE = read_tsv(FILENAME)
-
-#remove self hits from the database
-DATABASE = remove_self_hits(DATABASE)
-
-#using the data in database calculate an appropriate identity threshold for the network
-THRESHOLD = calculate_threshold(DATABASE)
-
-#remove data from database below the threshold
-DATABASE = remove_data_under_threshold(DATABASE, THRESHOLD)
-
-#generate the network
-generate_network(DATABASE)
-    
-    
+###run script!###
+main()
