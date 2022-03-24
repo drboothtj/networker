@@ -8,11 +8,12 @@ This repository contains scripts to create and analyse protein (or nucleotide) i
 
 ### 1. networker.py
 **Usage:**
+`python networker.py proteinseqs.faa`
 `python networker.py diamondorblastdatabase.tsv`
 
-If provided with a DIAMOND or BLAST database, 'networker.py' will produce a protein/nucleotide identity network ('xxx.html') and a list of nodes used in the network ('xxx.txt'). 
-It is recommended to make an all-vs-all comparison. 
-The output must have the format: `qseqid | sseqid | pident`
+If provided with a DIAMOND or BLAST table (.tsv), or an amino acid fasta file (.faa) 'networker.py' will produce a protein/nucleotide identity network ('xxx.html') and a list of nodes used in the network ('xxx.txt'). 
+
+It is recommended that you use .faa as an input, however if you want to use your own table, the file must have the format: `qseqid | sseqid | pident`
 
 For example, to make a usable DIAMOND search:
 
@@ -33,10 +34,8 @@ Example data and output can be found in the example_data folder. The file exampl
 
 ## To Do
 1. Fix threshold algorithm.
-2. Add a wrapper so that the input can be simplified to a fasta file.
-3. Enable custom thresholds.
-4. Create 'histogramer.py' to assist with threshold analysis.
-5. Write the network file in a readable format.
-6. Create 'subnetworker.py' for analysing subnetworks. 
-7. Compile into software package.
+2. Enable custom thresholds.
+3. Create 'histogramer.py' to assist with threshold analysis.
+4. Create 'subnetworker.py' for analysing subnetworks. 
+5. Compile into software package.
 
