@@ -35,7 +35,7 @@ def check_arguments(arguments):
         print_to_system("ERROR: Too many arguments! Please provide only the filename.")
         quit()
     elif number_of_arguments < 2:
-        print_to_system("ERROR: Too few arguments! Please provide only the filename.")
+        print_to_system("ERROR: Too few arguments! Please provide the filename.")
         quit()
     else:
         print_to_system("Creating a network from " + arguments[1] + "...")
