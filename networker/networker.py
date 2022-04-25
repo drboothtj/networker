@@ -1,4 +1,4 @@
-#networker version 0.0.1 by Dr. Thom Booth
+#networker version 0.1.0 by Dr. Thom Booth
 
 #Import the following:
 import sys
