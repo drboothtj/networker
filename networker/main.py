@@ -187,4 +187,5 @@ def main():
     generate_network(database)
 
 ###run script!###
-main()
+if __name__ == "__main__":
+    print('Sucess!')
