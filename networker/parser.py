@@ -30,6 +30,13 @@ parser.add_argument(
     default=None,
     help='the name of a node for subnetwork analysis'
     )
+parser.add_argument(
+    '-th',
+    '--threshold',
+    nargs='?',
+    default=None,
+    help='custom identity threshold'
+    )
 
 args = parser.parse_args()
 print(args.faa)
