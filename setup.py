@@ -15,6 +15,6 @@ setup(
     url="https://github.com/DrBoothTJ/networker/tree/ver010",
     license='GNU General Public License v3.0',
     python_requires='>=3.7',
-    install_requires=[],
+    install_requires=['numpy','pandas','pyvis'],
     entry_points={'console_scripts': ["networker=networker.main:main"]}
 )
