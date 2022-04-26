@@ -1,7 +1,15 @@
+'''
+Make DIAMOND databases and run searches using DIAMOND
+
+Functions:
+make_diamond_database(filename)
+run_diamond_search(filename)
+
+'''
 from networker import console
 
 def make_diamond_database(filename):
-    console.print_to_system('Making DIAMOND database...')
+    '''Create a DIAMOND database from a fasta file'''
     makedb = "diamond makedb"
     input_ = " --in " + filename + ""
     database = " --db " + filename.split('.')[0] + ".dmnd"
@@ -9,7 +17,7 @@ def make_diamond_database(filename):
     console.run_in_command_line(command)
 
 def run_diamond_search(filename):
-    console.print_to_system('Running DIAMOND blastP...')
+    '''Run BLASTP through DIAMOND'''
     blastp = "diamond blastp"
     query = " --query " + filename
     database = " --db " + filename.split('.')[0] + ".dmnd"
