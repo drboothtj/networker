@@ -60,10 +60,8 @@ def run_diamond(filename):
     diamond.run_diamond_search(filename)
     
 def main():
-    console.print_to_system("Running Networker version 0.1.0")
-    
-    args = parse_args() 
-    
+    console.print_to_system("Running Networker version 0.1.0")   
+    args = parse_args()   
     if args.tsv is None:
         if args.faa is None:
             console.print_to_system('No TSV or FAA provided; exiting')
@@ -71,22 +69,13 @@ def main():
         console.print_to_system('No TSV provided; runing DIAMOND')
         run_diamond(args.faa)
         args.tsv = args.faa.split('.')[0] + '.tsv'
-    
     database = io.read_tsv(args.tsv)
-
     database = remove_self_hits(database)
-
     if args.threshold is None:
         console.print_to_system('No threshold provided; calculating custom threshold.')
         threshold = calculate_threshold(database)
     else:
         threshold = args.threshold
-
     database = remove_data_under_threshold(database, threshold)
-
     network_filename = args.tsv.split('.')[0] + '.html'
     generate_network(database, network_filename)
-
-
-
-
