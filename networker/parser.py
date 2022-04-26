@@ -1,16 +1,20 @@
-#imports
+'''
+Create an argument parser using argparse
+
+Functions:
+    get_parser() -> parser
+'''
+
 import argparse
 
 def get_parser():
-    
-    #create the parser
+    ''''Create a parser object specific to networker'''
     parser = argparse.ArgumentParser(
         "networker",
-        description="networker:  a python package to generate and analyse protein similarity networks.",
+        description=
+        "networker:  a python package to generate and analyse protein similarity networks.",
         epilog="Written by Dr. Thom Booth, 2022."
         )
-
-    #create arguments
     parser.add_argument(
         '-f',
         '--faa',
@@ -35,11 +39,9 @@ def get_parser():
     parser.add_argument(
         '-th',
         '--threshold',
-        type = float,
+        type=float,
         nargs='?',
         default=None,
         help='custom identity threshold'
         )
-    
-    #return the parser
-    return(parser)
+    return parser
