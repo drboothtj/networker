@@ -2,7 +2,7 @@ Metadata-Version: 2.1
 Name: networker
 Version: 0.1.0
 Summary:  a python package to generate and analyse protein similarity networks
-Home-page: https://github.com/DrBoothTJ/networker/tree/ver010
+Home-page: https://github.com/DrBoothTJ/networker
 Author: Thomas J. Booth
 Author-email: thoboo@biosustain.dtu.dk
 License: GNU General Public License v3.0

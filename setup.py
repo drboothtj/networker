@@ -12,7 +12,7 @@ setup(
     description=" a python package to generate and analyse protein similarity networks",
     long_description=description,
     long_description_content_type="text/markdown",
-    url="https://github.com/DrBoothTJ/networker/tree/ver010",
+    url="https://github.com/DrBoothTJ/networker",
     license='GNU General Public License v3.0',
     python_requires='>=3.7',
     install_requires=['numpy','pandas','pyvis'],
