@@ -23,18 +23,17 @@ def get_parser():
         help='path to a fasta file containing amino acid sequences'
         )
     parser.add_argument(
+        '-hi',
+        '--histogram',
+        action='store_true',
+        help='print the identity threshold histogram'
+        )
+    parser.add_argument(
         '-t',
         '--tsv',
         nargs='?',
         default=None,
         help='path to a .tsv containing BLASTP results'
-        )
-    parser.add_argument(
-        '-n',
-        '--node',
-        nargs='?',
-        default=None,
-        help='the name of a node for subnetwork analysis'
         )
     parser.add_argument(
         '-th',
@@ -43,5 +42,19 @@ def get_parser():
         nargs='?',
         default=None,
         help='custom identity threshold'
+        )
+    parser.add_argument(
+        '-n',
+        '--node',
+        nargs='*',
+        default=None,
+        help='a list of nodes for subnetwork extraction'
+        )
+    parser.add_argument(
+        '-nl',
+        '--nodelist',
+        action='store_true',
+        default=None,
+        help='print the list of nodes in the network to a text file'
         )
     return parser
