@@ -17,9 +17,9 @@ def read_tsv(database_file):
     database.columns = ['query', 'subject', 'identity']
     return database
 
-def write_to_file(write_lines, write_name):
+def write_to_file(filename, write_lines):
     '''Write a list line by line into a new file'''
-    file = open(write_name, "a")
+    file = open(filename, "a")
     for line in write_lines:
         file.write(line + '\n')
     file.close()
