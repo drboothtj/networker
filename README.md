@@ -48,5 +48,3 @@ Example data and output can be found in the example_data folder. The file exampl
 3. Use nodes list to extract regions.
 4. Create -hi --histogram to print histogram
 5. Update example data
-
-
