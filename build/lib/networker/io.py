@@ -7,10 +7,6 @@ Functions:
 '''
 import pandas as pd
 
-def change_extension(filename, new_extension):
-    new_filename = filename.split('.')[0] + '.' + new_extension
-    return new_filename
-
 def read_tsv(database_file):
     '''Read a TSV file to a pandas dataframe'''
     database = pd.read_csv(database_file, sep='\t', header=None)
