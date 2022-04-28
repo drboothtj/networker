@@ -102,3 +102,6 @@ def main():
     database = remove_data_under_threshold(database, threshold)
     network_filename = args.tsv.split('.')[0] + '.html'
     generate_network(database, network_filename)
+
+if __name__ == "__main__":
+    main()
