@@ -12,6 +12,7 @@ It has the following dependencies that will be installed automatically:
 1. numpy
 2. pandas
 3. pyvis
+4. plotly
 
 It also uses DIAMOND, which must be installed seperatly.
 
