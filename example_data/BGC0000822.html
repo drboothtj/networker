@@ -1,0 +1,129 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 75%;
+            height: 100%;
+            background-color: white;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+        #config {
+            float: left;
+            width: 400px;
+            height: 600px;
+        }
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<div id = "config"></div>
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"color": "red", "font": {"color": "black"}, "id": "BGC0001337.1_lzrH2", "label": "BGC0001337.1_lzrH2", "shape": "dot", "title": "BGC0001337.1_lzrH2\u003cbr\u003e9 neighbors:\u003cbr\u003eBGC0001335.1_borH\u003cbr\u003eBGC0000376.1_fmoD\u003cbr\u003eBGC0001368.1_IF33_RS0114770\u003cbr\u003eBGC0001374.1_thdH\u003cbr\u003eBGC0000823.1_rebH\u003cbr\u003eBGC0000822.1_rebH\u003cbr\u003eBGC0000821.1_rebH\u003cbr\u003eBGC0000378.1_ktzQ\u003cbr\u003eBGC0000809.1_atH", "value": 9}, {"color": "red", "font": {"color": "black"}, "id": "BGC0001368.1_IF33_RS0114770", "label": "BGC0001368.1_IF33_RS0114770", "shape": "dot", "title": "BGC0001368.1_IF33_RS0114770\u003cbr\u003e8 neighbors:\u003cbr\u003eBGC0001335.1_borH\u003cbr\u003eBGC0000376.1_fmoD\u003cbr\u003eBGC0001374.1_thdH\u003cbr\u003eBGC0000823.1_rebH\u003cbr\u003eBGC0000821.1_rebH\u003cbr\u003eBGC0000822.1_rebH\u003cbr\u003eBGC0001337.1_lzrH2\u003cbr\u003eBGC0000809.1_atH", "value": 8}, {"color": "red", "font": {"color": "black"}, "id": "BGC0001335.1_borH", "label": "BGC0001335.1_borH", "shape": "dot", "title": "BGC0001335.1_borH\u003cbr\u003e8 neighbors:\u003cbr\u003eBGC0000376.1_fmoD\u003cbr\u003eBGC0001368.1_IF33_RS0114770\u003cbr\u003eBGC0001374.1_thdH\u003cbr\u003eBGC0000823.1_rebH\u003cbr\u003eBGC0000821.1_rebH\u003cbr\u003eBGC0000822.1_rebH\u003cbr\u003eBGC0001337.1_lzrH2\u003cbr\u003eBGC0000809.1_atH", "value": 8}, {"color": "red", "font": {"color": "black"}, "id": "BGC0001374.1_thdH", "label": "BGC0001374.1_thdH", "shape": "dot", "title": "BGC0001374.1_thdH\u003cbr\u003e9 neighbors:\u003cbr\u003eBGC0001335.1_borH\u003cbr\u003eBGC0000376.1_fmoD\u003cbr\u003eBGC0001368.1_IF33_RS0114770\u003cbr\u003eBGC0000823.1_rebH\u003cbr\u003eBGC0000821.1_rebH\u003cbr\u003eBGC0000822.1_rebH\u003cbr\u003eBGC0001337.1_lzrH2\u003cbr\u003eBGC0000378.1_ktzQ\u003cbr\u003eBGC0000809.1_atH", "value": 9}, {"color": "red", "font": {"color": "black"}, "id": "BGC0000809.1_atH", "label": "BGC0000809.1_atH", "shape": "dot", "title": "BGC0000809.1_atH\u003cbr\u003e10 neighbors:\u003cbr\u003eBGC0001335.1_borH\u003cbr\u003eBGC0000376.1_fmoD\u003cbr\u003eBGC0001368.1_IF33_RS0114770\u003cbr\u003eBGC0001374.1_thdH\u003cbr\u003eBGC0000924.1_prnA\u003cbr\u003eBGC0000823.1_rebH\u003cbr\u003eBGC0000821.1_rebH\u003cbr\u003eBGC0000822.1_rebH\u003cbr\u003eBGC0001337.1_lzrH2\u003cbr\u003eBGC0000378.1_ktzQ", "value": 10}, {"color": "red", "font": {"color": "black"}, "id": "BGC0000378.1_ktzQ", "label": "BGC0000378.1_ktzQ", "shape": "dot", "title": "BGC0000378.1_ktzQ\u003cbr\u003e6 neighbors:\u003cbr\u003eBGC0001374.1_thdH\u003cbr\u003eBGC0000823.1_rebH\u003cbr\u003eBGC0000821.1_rebH\u003cbr\u003eBGC0000822.1_rebH\u003cbr\u003eBGC0001337.1_lzrH2\u003cbr\u003eBGC0000809.1_atH", "value": 6}, {"color": "red", "font": {"color": "black"}, "id": "BGC0000823.1_rebH", "label": "BGC0000823.1_rebH", "shape": "dot", "title": "BGC0000823.1_rebH\u003cbr\u003e9 neighbors:\u003cbr\u003eBGC0001335.1_borH\u003cbr\u003eBGC0000376.1_fmoD\u003cbr\u003eBGC0001368.1_IF33_RS0114770\u003cbr\u003eBGC0001374.1_thdH\u003cbr\u003eBGC0000821.1_rebH\u003cbr\u003eBGC0000822.1_rebH\u003cbr\u003eBGC0001337.1_lzrH2\u003cbr\u003eBGC0000378.1_ktzQ\u003cbr\u003eBGC0000809.1_atH", "value": 9}, {"color": "red", "font": {"color": "black"}, "id": "BGC0000822.1_rebH", "label": "BGC0000822.1_rebH", "shape": "dot", "title": "BGC0000822.1_rebH\u003cbr\u003e9 neighbors:\u003cbr\u003eBGC0001335.1_borH\u003cbr\u003eBGC0000376.1_fmoD\u003cbr\u003eBGC0001368.1_IF33_RS0114770\u003cbr\u003eBGC0001374.1_thdH\u003cbr\u003eBGC0000823.1_rebH\u003cbr\u003eBGC0000821.1_rebH\u003cbr\u003eBGC0001337.1_lzrH2\u003cbr\u003eBGC0000378.1_ktzQ\u003cbr\u003eBGC0000809.1_atH", "value": 9}, {"color": "red", "font": {"color": "black"}, "id": "BGC0000821.1_rebH", "label": "BGC0000821.1_rebH", "shape": "dot", "title": "BGC0000821.1_rebH\u003cbr\u003e9 neighbors:\u003cbr\u003eBGC0001335.1_borH\u003cbr\u003eBGC0000376.1_fmoD\u003cbr\u003eBGC0001368.1_IF33_RS0114770\u003cbr\u003eBGC0001374.1_thdH\u003cbr\u003eBGC0000823.1_rebH\u003cbr\u003eBGC0000822.1_rebH\u003cbr\u003eBGC0001337.1_lzrH2\u003cbr\u003eBGC0000378.1_ktzQ\u003cbr\u003eBGC0000809.1_atH", "value": 9}, {"color": "red", "font": {"color": "black"}, "id": "BGC0000376.1_fmoD", "label": "BGC0000376.1_fmoD", "shape": "dot", "title": "BGC0000376.1_fmoD\u003cbr\u003e8 neighbors:\u003cbr\u003eBGC0001335.1_borH\u003cbr\u003eBGC0001368.1_IF33_RS0114770\u003cbr\u003eBGC0001374.1_thdH\u003cbr\u003eBGC0000823.1_rebH\u003cbr\u003eBGC0000821.1_rebH\u003cbr\u003eBGC0000822.1_rebH\u003cbr\u003eBGC0001337.1_lzrH2\u003cbr\u003eBGC0000809.1_atH", "value": 8}, {"color": "red", "font": {"color": "black"}, "id": "BGC0000924.1_prnA", "label": "BGC0000924.1_prnA", "shape": "dot", "title": "BGC0000924.1_prnA\u003cbr\u003e1 neighbors:\u003cbr\u003eBGC0000809.1_atH", "value": 1}]);
+        edges = new vis.DataSet([{"from": "BGC0001337.1_lzrH2", "to": "BGC0001368.1_IF33_RS0114770", "value": 70.8}, {"from": "BGC0001337.1_lzrH2", "to": "BGC0001335.1_borH", "value": 66.5}, {"from": "BGC0001337.1_lzrH2", "to": "BGC0001374.1_thdH", "value": 67.2}, {"from": "BGC0001337.1_lzrH2", "to": "BGC0000809.1_atH", "value": 65.7}, {"from": "BGC0001337.1_lzrH2", "to": "BGC0000378.1_ktzQ", "value": 65.1}, {"from": "BGC0001337.1_lzrH2", "to": "BGC0000823.1_rebH", "value": 65.1}, {"from": "BGC0001337.1_lzrH2", "to": "BGC0000822.1_rebH", "value": 65.1}, {"from": "BGC0001337.1_lzrH2", "to": "BGC0000821.1_rebH", "value": 65.1}, {"from": "BGC0001337.1_lzrH2", "to": "BGC0000376.1_fmoD", "value": 65.0}, {"from": "BGC0000924.1_prnA", "to": "BGC0000809.1_atH", "value": 61.0}, {"from": "BGC0000376.1_fmoD", "to": "BGC0001374.1_thdH", "value": 67.9}, {"from": "BGC0000376.1_fmoD", "to": "BGC0001368.1_IF33_RS0114770", "value": 65.2}, {"from": "BGC0000376.1_fmoD", "to": "BGC0001335.1_borH", "value": 64.9}, {"from": "BGC0000376.1_fmoD", "to": "BGC0000823.1_rebH", "value": 64.4}, {"from": "BGC0000376.1_fmoD", "to": "BGC0000822.1_rebH", "value": 64.4}, {"from": "BGC0000376.1_fmoD", "to": "BGC0000821.1_rebH", "value": 64.4}, {"from": "BGC0000376.1_fmoD", "to": "BGC0000809.1_atH", "value": 63.6}, {"from": "BGC0001335.1_borH", "to": "BGC0001368.1_IF33_RS0114770", "value": 71.2}, {"from": "BGC0001335.1_borH", "to": "BGC0001374.1_thdH", "value": 69.8}, {"from": "BGC0001335.1_borH", "to": "BGC0000823.1_rebH", "value": 65.3}, {"from": "BGC0001335.1_borH", "to": "BGC0000822.1_rebH", "value": 65.3}, {"from": "BGC0001335.1_borH", "to": "BGC0000821.1_rebH", "value": 65.3}, {"from": "BGC0001335.1_borH", "to": "BGC0000809.1_atH", "value": 65.4}, {"from": "BGC0001368.1_IF33_RS0114770", "to": "BGC0001374.1_thdH", "value": 70.7}, {"from": "BGC0001368.1_IF33_RS0114770", "to": "BGC0000823.1_rebH", "value": 67.2}, {"from": "BGC0001368.1_IF33_RS0114770", "to": "BGC0000822.1_rebH", "value": 67.2}, {"from": "BGC0001368.1_IF33_RS0114770", "to": "BGC0000821.1_rebH", "value": 67.2}, {"from": "BGC0001368.1_IF33_RS0114770", "to": "BGC0000809.1_atH", "value": 68.2}, {"from": "BGC0000823.1_rebH", "to": "BGC0000822.1_rebH", "value": 100.0}, {"from": "BGC0000823.1_rebH", "to": "BGC0000821.1_rebH", "value": 100.0}, {"from": "BGC0000823.1_rebH", "to": "BGC0000809.1_atH", "value": 73.9}, {"from": "BGC0000823.1_rebH", "to": "BGC0001374.1_thdH", "value": 63.2}, {"from": "BGC0000823.1_rebH", "to": "BGC0000378.1_ktzQ", "value": 60.1}, {"from": "BGC0000378.1_ktzQ", "to": "BGC0000809.1_atH", "value": 60.1}, {"from": "BGC0000378.1_ktzQ", "to": "BGC0001374.1_thdH", "value": 60.0}, {"from": "BGC0000378.1_ktzQ", "to": "BGC0000822.1_rebH", "value": 60.1}, {"from": "BGC0000378.1_ktzQ", "to": "BGC0000821.1_rebH", "value": 60.1}, {"from": "BGC0000822.1_rebH", "to": "BGC0000821.1_rebH", "value": 100.0}, {"from": "BGC0000822.1_rebH", "to": "BGC0000809.1_atH", "value": 73.9}, {"from": "BGC0000822.1_rebH", "to": "BGC0001374.1_thdH", "value": 63.2}, {"from": "BGC0001374.1_thdH", "to": "BGC0000809.1_atH", "value": 66.8}, {"from": "BGC0001374.1_thdH", "to": "BGC0000821.1_rebH", "value": 63.2}, {"from": "BGC0000809.1_atH", "to": "BGC0000821.1_rebH", "value": 73.9}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": true,
+        "filter": true
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": false,
+            "type": "continuous"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "barnesHut": {
+            "avoidOverlap": 0,
+            "centralGravity": 0.3,
+            "damping": 0.09,
+            "gravitationalConstant": -80000,
+            "springConstant": 0.001,
+            "springLength": 250
+        },
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        
+        // if this network requires displaying the configure window,
+        // put it in its div
+        options.configure["container"] = document.getElementById("config");
+        
+
+        network = new vis.Network(container, data, options);
+	 
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 75%;
+            height: 100%;
+            background-color: white;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+        #config {
+            float: left;
+            width: 400px;
+            height: 600px;
+        }
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<div id = "config"></div>
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"color": "red", "font": {"color": "black"}, "id": "BGC0000374.1_ACE80255.1", "label": "BGC0000374.1_ACE80255.1", "shape": "dot", "title": "BGC0000374.1_ACE80255.1\u003cbr\u003e9 neighbors:\u003cbr\u003eBGC0001159.1_mpy16\u003cbr\u003eBGC0000128.1_pltA\u003cbr\u003eBGC0001172.1_clz5\u003cbr\u003eBGC0001038.1_prlT\u003cbr\u003eBGC0001934.1_arm21\u003cbr\u003eBGC0000036.1_AAZ77674.1\u003cbr\u003eBGC0000130.1_pyr29\u003cbr\u003eBGC0001288.1_BAQ25509.1\u003cbr\u003eBGC0002022.1_ams22", "value": 9}, {"color": "red", "font": {"color": "black"}, "id": "BGC0001172.1_clz5", "label": "BGC0001172.1_clz5", "shape": "dot", "title": "BGC0001172.1_clz5\u003cbr\u003e11 neighbors:\u003cbr\u003eBGC0001159.1_mpy16\u003cbr\u003eBGC0000128.1_pltA\u003cbr\u003eBGC0001038.1_prlT\u003cbr\u003eBGC0001934.1_arm21\u003cbr\u003eBGC0000127.1_pltA\u003cbr\u003eBGC0001750.1_pynE\u003cbr\u003eBGC0000036.1_AAZ77674.1\u003cbr\u003eBGC0000130.1_pyr29\u003cbr\u003eBGC0001288.1_BAQ25509.1\u003cbr\u003eBGC0000374.1_ACE80255.1\u003cbr\u003eBGC0002022.1_ams22", "value": 11}, {"color": "red", "font": {"color": "black"}, "id": "BGC0000130.1_pyr29", "label": "BGC0000130.1_pyr29", "shape": "dot", "title": "BGC0000130.1_pyr29\u003cbr\u003e11 neighbors:\u003cbr\u003eBGC0001159.1_mpy16\u003cbr\u003eBGC0000128.1_pltA\u003cbr\u003eBGC0001172.1_clz5\u003cbr\u003eBGC0001038.1_prlT\u003cbr\u003eBGC0001934.1_arm21\u003cbr\u003eBGC0000127.1_pltA\u003cbr\u003eBGC0001750.1_pynE\u003cbr\u003eBGC0000036.1_AAZ77674.1\u003cbr\u003eBGC0001288.1_BAQ25509.1\u003cbr\u003eBGC0000374.1_ACE80255.1\u003cbr\u003eBGC0002022.1_ams22", "value": 11}, {"color": "red", "font": {"color": "black"}, "id": "BGC0001288.1_BAQ25509.1", "label": "BGC0001288.1_BAQ25509.1", "shape": "dot", "title": "BGC0001288.1_BAQ25509.1\u003cbr\u003e11 neighbors:\u003cbr\u003eBGC0001159.1_mpy16\u003cbr\u003eBGC0000128.1_pltA\u003cbr\u003eBGC0001172.1_clz5\u003cbr\u003eBGC0001038.1_prlT\u003cbr\u003eBGC0001934.1_arm21\u003cbr\u003eBGC0000127.1_pltA\u003cbr\u003eBGC0001750.1_pynE\u003cbr\u003eBGC0000036.1_AAZ77674.1\u003cbr\u003eBGC0000130.1_pyr29\u003cbr\u003eBGC0000374.1_ACE80255.1\u003cbr\u003eBGC0002022.1_ams22", "value": 11}, {"color": "red", "font": {"color": "black"}, "id": "BGC0000036.1_AAZ77674.1", "label": "BGC0000036.1_AAZ77674.1", "shape": "dot", "title": "BGC0000036.1_AAZ77674.1\u003cbr\u003e9 neighbors:\u003cbr\u003eBGC0001159.1_mpy16\u003cbr\u003eBGC0000128.1_pltA\u003cbr\u003eBGC0001172.1_clz5\u003cbr\u003eBGC0001038.1_prlT\u003cbr\u003eBGC0001934.1_arm21\u003cbr\u003eBGC0000130.1_pyr29\u003cbr\u003eBGC0001288.1_BAQ25509.1\u003cbr\u003eBGC0000374.1_ACE80255.1\u003cbr\u003eBGC0002022.1_ams22", "value": 9}, {"color": "red", "font": {"color": "black"}, "id": "BGC0001934.1_arm21", "label": "BGC0001934.1_arm21", "shape": "dot", "title": "BGC0001934.1_arm21\u003cbr\u003e11 neighbors:\u003cbr\u003eBGC0001159.1_mpy16\u003cbr\u003eBGC0000128.1_pltA\u003cbr\u003eBGC0001172.1_clz5\u003cbr\u003eBGC0001038.1_prlT\u003cbr\u003eBGC0000127.1_pltA\u003cbr\u003eBGC0001750.1_pynE\u003cbr\u003eBGC0000036.1_AAZ77674.1\u003cbr\u003eBGC0000130.1_pyr29\u003cbr\u003eBGC0001288.1_BAQ25509.1\u003cbr\u003eBGC0000374.1_ACE80255.1\u003cbr\u003eBGC0002022.1_ams22", "value": 11}, {"color": "red", "font": {"color": "black"}, "id": "BGC0002022.1_ams22", "label": "BGC0002022.1_ams22", "shape": "dot", "title": "BGC0002022.1_ams22\u003cbr\u003e11 neighbors:\u003cbr\u003eBGC0001159.1_mpy16\u003cbr\u003eBGC0000128.1_pltA\u003cbr\u003eBGC0001172.1_clz5\u003cbr\u003eBGC0001038.1_prlT\u003cbr\u003eBGC0001934.1_arm21\u003cbr\u003eBGC0000127.1_pltA\u003cbr\u003eBGC0001750.1_pynE\u003cbr\u003eBGC0000036.1_AAZ77674.1\u003cbr\u003eBGC0000130.1_pyr29\u003cbr\u003eBGC0001288.1_BAQ25509.1\u003cbr\u003eBGC0000374.1_ACE80255.1", "value": 11}, {"color": "red", "font": {"color": "black"}, "id": "BGC0001159.1_mpy16", "label": "BGC0001159.1_mpy16", "shape": "dot", "title": "BGC0001159.1_mpy16\u003cbr\u003e10 neighbors:\u003cbr\u003eBGC0000128.1_pltA\u003cbr\u003eBGC0001172.1_clz5\u003cbr\u003eBGC0001038.1_prlT\u003cbr\u003eBGC0001934.1_arm21\u003cbr\u003eBGC0000127.1_pltA\u003cbr\u003eBGC0000036.1_AAZ77674.1\u003cbr\u003eBGC0000130.1_pyr29\u003cbr\u003eBGC0001288.1_BAQ25509.1\u003cbr\u003eBGC0000374.1_ACE80255.1\u003cbr\u003eBGC0002022.1_ams22", "value": 10}, {"color": "red", "font": {"color": "black"}, "id": "BGC0000128.1_pltA", "label": "BGC0000128.1_pltA", "shape": "dot", "title": "BGC0000128.1_pltA\u003cbr\u003e9 neighbors:\u003cbr\u003eBGC0001159.1_mpy16\u003cbr\u003eBGC0001172.1_clz5\u003cbr\u003eBGC0001934.1_arm21\u003cbr\u003eBGC0000127.1_pltA\u003cbr\u003eBGC0000036.1_AAZ77674.1\u003cbr\u003eBGC0000130.1_pyr29\u003cbr\u003eBGC0001288.1_BAQ25509.1\u003cbr\u003eBGC0000374.1_ACE80255.1\u003cbr\u003eBGC0002022.1_ams22", "value": 9}, {"color": "red", "font": {"color": "black"}, "id": "BGC0001038.1_prlT", "label": "BGC0001038.1_prlT", "shape": "dot", "title": "BGC0001038.1_prlT\u003cbr\u003e8 neighbors:\u003cbr\u003eBGC0001159.1_mpy16\u003cbr\u003eBGC0001172.1_clz5\u003cbr\u003eBGC0001934.1_arm21\u003cbr\u003eBGC0000036.1_AAZ77674.1\u003cbr\u003eBGC0000130.1_pyr29\u003cbr\u003eBGC0001288.1_BAQ25509.1\u003cbr\u003eBGC0000374.1_ACE80255.1\u003cbr\u003eBGC0002022.1_ams22", "value": 8}, {"color": "red", "font": {"color": "black"}, "id": "BGC0000127.1_pltA", "label": "BGC0000127.1_pltA", "shape": "dot", "title": "BGC0000127.1_pltA\u003cbr\u003e7 neighbors:\u003cbr\u003eBGC0001159.1_mpy16\u003cbr\u003eBGC0000128.1_pltA\u003cbr\u003eBGC0001172.1_clz5\u003cbr\u003eBGC0001934.1_arm21\u003cbr\u003eBGC0000130.1_pyr29\u003cbr\u003eBGC0001288.1_BAQ25509.1\u003cbr\u003eBGC0002022.1_ams22", "value": 7}, {"color": "red", "font": {"color": "black"}, "id": "BGC0001750.1_pynE", "label": "BGC0001750.1_pynE", "shape": "dot", "title": "BGC0001750.1_pynE\u003cbr\u003e5 neighbors:\u003cbr\u003eBGC0001172.1_clz5\u003cbr\u003eBGC0001934.1_arm21\u003cbr\u003eBGC0000130.1_pyr29\u003cbr\u003eBGC0001288.1_BAQ25509.1\u003cbr\u003eBGC0002022.1_ams22", "value": 5}]);
+        edges = new vis.DataSet([{"from": "BGC0000374.1_ACE80255.1", "to": "BGC0001172.1_clz5", "value": 67.3}, {"from": "BGC0000374.1_ACE80255.1", "to": "BGC0000130.1_pyr29", "value": 65.5}, {"from": "BGC0000374.1_ACE80255.1", "to": "BGC0001288.1_BAQ25509.1", "value": 66.7}, {"from": "BGC0000374.1_ACE80255.1", "to": "BGC0000036.1_AAZ77674.1", "value": 64.3}, {"from": "BGC0000374.1_ACE80255.1", "to": "BGC0001934.1_arm21", "value": 65.9}, {"from": "BGC0000374.1_ACE80255.1", "to": "BGC0002022.1_ams22", "value": 65.9}, {"from": "BGC0000374.1_ACE80255.1", "to": "BGC0001159.1_mpy16", "value": 64.1}, {"from": "BGC0000374.1_ACE80255.1", "to": "BGC0000128.1_pltA", "value": 60.2}, {"from": "BGC0000374.1_ACE80255.1", "to": "BGC0001038.1_prlT", "value": 62.0}, {"from": "BGC0001159.1_mpy16", "to": "BGC0000130.1_pyr29", "value": 73.4}, {"from": "BGC0001159.1_mpy16", "to": "BGC0001934.1_arm21", "value": 73.8}, {"from": "BGC0001159.1_mpy16", "to": "BGC0002022.1_ams22", "value": 73.8}, {"from": "BGC0001159.1_mpy16", "to": "BGC0001172.1_clz5", "value": 69.3}, {"from": "BGC0001159.1_mpy16", "to": "BGC0001288.1_BAQ25509.1", "value": 69.8}, {"from": "BGC0001159.1_mpy16", "to": "BGC0000036.1_AAZ77674.1", "value": 66.6}, {"from": "BGC0001159.1_mpy16", "to": "BGC0000127.1_pltA", "value": 64.4}, {"from": "BGC0001159.1_mpy16", "to": "BGC0000128.1_pltA", "value": 64.9}, {"from": "BGC0001159.1_mpy16", "to": "BGC0001038.1_prlT", "value": 66.3}, {"from": "BGC0001750.1_pynE", "to": "BGC0001172.1_clz5", "value": 64.6}, {"from": "BGC0001750.1_pynE", "to": "BGC0001934.1_arm21", "value": 61.9}, {"from": "BGC0001750.1_pynE", "to": "BGC0002022.1_ams22", "value": 61.9}, {"from": "BGC0001750.1_pynE", "to": "BGC0001288.1_BAQ25509.1", "value": 61.4}, {"from": "BGC0001750.1_pynE", "to": "BGC0000130.1_pyr29", "value": 60.0}, {"from": "BGC0001934.1_arm21", "to": "BGC0002022.1_ams22", "value": 100.0}, {"from": "BGC0001934.1_arm21", "to": "BGC0000130.1_pyr29", "value": 82.6}, {"from": "BGC0001934.1_arm21", "to": "BGC0001288.1_BAQ25509.1", "value": 70.0}, {"from": "BGC0001934.1_arm21", "to": "BGC0000036.1_AAZ77674.1", "value": 68.6}, {"from": "BGC0001934.1_arm21", "to": "BGC0001172.1_clz5", "value": 69.3}, {"from": "BGC0001934.1_arm21", "to": "BGC0000128.1_pltA", "value": 66.5}, {"from": "BGC0001934.1_arm21", "to": "BGC0001038.1_prlT", "value": 74.4}, {"from": "BGC0001934.1_arm21", "to": "BGC0000127.1_pltA", "value": 64.7}, {"from": "BGC0001288.1_BAQ25509.1", "to": "BGC0000036.1_AAZ77674.1", "value": 76.9}, {"from": "BGC0001288.1_BAQ25509.1", "to": "BGC0000130.1_pyr29", "value": 70.9}, {"from": "BGC0001288.1_BAQ25509.1", "to": "BGC0002022.1_ams22", "value": 70.0}, {"from": "BGC0001288.1_BAQ25509.1", "to": "BGC0001172.1_clz5", "value": 66.5}, {"from": "BGC0001288.1_BAQ25509.1", "to": "BGC0000128.1_pltA", "value": 64.4}, {"from": "BGC0001288.1_BAQ25509.1", "to": "BGC0000127.1_pltA", "value": 62.8}, {"from": "BGC0001288.1_BAQ25509.1", "to": "BGC0001038.1_prlT", "value": 67.2}, {"from": "BGC0000128.1_pltA", "to": "BGC0000127.1_pltA", "value": 87.8}, {"from": "BGC0000128.1_pltA", "to": "BGC0000130.1_pyr29", "value": 66.2}, {"from": "BGC0000128.1_pltA", "to": "BGC0002022.1_ams22", "value": 66.7}, {"from": "BGC0000128.1_pltA", "to": "BGC0001172.1_clz5", "value": 62.4}, {"from": "BGC0000128.1_pltA", "to": "BGC0000036.1_AAZ77674.1", "value": 62.1}, {"from": "BGC0000036.1_AAZ77674.1", "to": "BGC0000130.1_pyr29", "value": 69.3}, {"from": "BGC0000036.1_AAZ77674.1", "to": "BGC0002022.1_ams22", "value": 68.6}, {"from": "BGC0000036.1_AAZ77674.1", "to": "BGC0001172.1_clz5", "value": 64.9}, {"from": "BGC0000036.1_AAZ77674.1", "to": "BGC0001038.1_prlT", "value": 65.6}, {"from": "BGC0000127.1_pltA", "to": "BGC0000130.1_pyr29", "value": 65.8}, {"from": "BGC0000127.1_pltA", "to": "BGC0002022.1_ams22", "value": 64.7}, {"from": "BGC0000127.1_pltA", "to": "BGC0001172.1_clz5", "value": 60.6}, {"from": "BGC0002022.1_ams22", "to": "BGC0000130.1_pyr29", "value": 82.6}, {"from": "BGC0002022.1_ams22", "to": "BGC0001172.1_clz5", "value": 69.3}, {"from": "BGC0002022.1_ams22", "to": "BGC0001038.1_prlT", "value": 74.4}, {"from": "BGC0000130.1_pyr29", "to": "BGC0001172.1_clz5", "value": 71.7}, {"from": "BGC0000130.1_pyr29", "to": "BGC0001038.1_prlT", "value": 73.1}, {"from": "BGC0001038.1_prlT", "to": "BGC0001172.1_clz5", "value": 65.6}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": true,
+        "filter": true
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": false,
+            "type": "continuous"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "barnesHut": {
+            "avoidOverlap": 0,
+            "centralGravity": 0.3,
+            "damping": 0.09,
+            "gravitationalConstant": -80000,
+            "springConstant": 0.001,
+            "springLength": 250
+        },
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        
+        // if this network requires displaying the configure window,
+        // put it in its div
+        options.configure["container"] = document.getElementById("config");
+        
+
+        network = new vis.Network(container, data, options);
+	 
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>
