@@ -40,22 +40,32 @@ Description: # networker
         
         `networker --tsv file.tsv --threshold 75.25`
         
-        ### Usage Case 3: Print Histogram
-        WIP
+        ### Usage Case 3: Print histogram and a list of nodes
+        To produce a histogram showing the cummulative number of edges versus identity threshold add the flag `-hi` or `--histogram`. This can aid in deciding suitable thresholds for your dataset. To print a list of nodes from the network add the flag `-nl` or `--node_list`.
         
-        ### Usage Case 4: Custom Colouring of Nodes
-        WIP
+        Therefore:
         
+        `networker --faa file.faa -hi -nl`
+        
+        will produce file.tsv, file.dmnd and file.html as above, but also the node list (file.txt) and the histogram (histogram_file.html).
+        
+        ### Usage Case 4: Generate sub-networks form a list of nodes
+        
+        You can also use `networker` to produce individual networks and node lists for each subwork in a given network by providing a list of node names using the `-n` or `node` flag. 
+        
+        `networker --tsv file.tsv -n node1 node2 node3 -nl`
+        
+        This will produce a network based on file.tsv (file.html), individual networks for each subnetwork containing the specified nodes (node1.hmtl, node2.hmtl and node3.hmtl) and, node lists for the individual nodes and the whole network (file.txt, node1.txt, node2.txt and node3.txt).
+        
+        ### Usage Case 5: Custom Colouring of Nodes
+        Coming in version 0.3.0; work in progress.
         
         ## Example Data
         Example data and output can be found in the example_data folder. The file example.faa was used to generate the DIAMOND database and, subsequentally, the network ('example.html') and the node list ('example.txt').
         
         ## To Do
-        1. Specify node for subnetwork analysis.
-        2. Enable custom coloring of nodes.
-        3. Use nodes list to extract regions.
-        4. Create -hi --histogram to print histogram
-        5. Update example data
+        1. Enable custom coloring of nodes.
+        
         
 Platform: UNKNOWN
 Requires-Python: >=3.7
