@@ -2,12 +2,14 @@
 Read and write files
 
 Functions:
+    change_extension(filename, new_extension) -> new_filename
     read_tsv(database_file) -> database
     write_to_file(write_lines, write_name)
 '''
 import pandas as pd
 
 def change_extension(filename, new_extension):
+    '''Takes a file name and changes the extension to the string provided'''
     new_filename = filename.split('.')[0] + '.' + new_extension
     return new_filename
 

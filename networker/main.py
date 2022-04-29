@@ -3,6 +3,7 @@ Main routine for networker
 
 Functions:
     calculate_threshold(database) -> threshold
+    def extract_nodes(node, database) -> database
     generate_network(database,filename)
     remove_data_under_threshold(database, threshold) -> database
     parse_args() -> args
@@ -28,11 +29,12 @@ def calculate_threshold(database):
     console.print_to_system("Recommended threshold calculated at " + str(threshold) + "% identity")
     return threshold
 
-def extract_nodes(node, database):            
+def extract_nodes(node, database):
+    '''extract rows from the dataframe containing the reference node'''
     for i in database.index:
         query = database['query'][i]
         subject = database['subject'][i]
-        if query != node and subject != node:
+        if node not in (query, subject):
             database.drop(i, inplace=True)
     return database
 
@@ -113,7 +115,7 @@ def main():
         threshold = calculate_threshold(database)
     else:
         threshold = args.threshold
-    
+
     if args.histogram is True:
         console.print_to_system('Plotting histogram...')
         filename = 'histogram_' + io.change_extension(args.tsv, 'html')
@@ -131,11 +133,11 @@ def main():
         generate_network(database, filename, print_list)
     else:
         for node in args.node:
-            node_database = extract_nodes(node,database)
+            node_database = extract_nodes(node, database)
             filename = io.change_extension(node, 'html')
             generate_network(node_database, filename, print_list)
             console.print_to_system('Network saved as ' + filename)
-   
+
     console.print_to_system('Networker has finished its analysis!')
 
 if __name__ == "__main__":
