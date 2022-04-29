@@ -94,7 +94,7 @@ def run_diamond(filename):
 
 def main():
     '''run networker'''
-    console.print_to_system("Running Networker version 0.1.1")
+    console.print_to_system("Running Networker version 0.2.0")
     args = parse_args()
 
     if args.tsv is None:
