@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: networker
-Version: 0.1.0
+Version: 0.2.2
 Summary:  a python package to generate and analyse protein similarity networks
 Home-page: https://github.com/DrBoothTJ/networker
 Author: Thomas J. Booth
@@ -9,46 +9,62 @@ License: GNU General Public License v3.0
 Description: # networker
         
         ## Description
+        `networker` is a python package for building and analysing protein similarity networks.
         
-        This repository contains scripts to create and analyse protein (or nucleotide) identity networks.
+        ## Installation
+        `networker` can be installed with:
         
-        ## Scirpts
+        `pip install networker`
         
-        ### 1. networker.py
-        **Usage:**
+        It has the following dependencies that will be installed automatically:
+        1. numpy
+        2. pandas
+        3. pyvis
         
-        `python networker.py proteinseqs.faa`
+        It also uses DIAMOND, which must be installed seperatly.
         
-        or,
+        ## Usage
+        `networker` will take an input file and produce an interactive network. It can take either a fasta amino acid file (.faa) or a tab seperated values file (.tsv) as input.
         
-        `python networker.py diamondorblastdatabase.tsv`
+        ### Usage Case 1: Create a protein network from a fasta file
+        The simplest method for using `networker` is to provide a .faa file. This can be done as follows:
         
-        If provided with a DIAMOND or BLAST table (.tsv), or an amino acid fasta file (.faa) 'networker.py' will produce a protein/nucleotide identity network ('xxx.html') and a list of nodes used in the network ('xxx.txt'). 
+        `networker --faa file.faa`
         
-        It is recommended that you use .faa as an input, however if you want to use your own table, the file must have the format: `qseqid | sseqid | pident`
+        This will produce a diamond database (file.dmnd) and run a BLAST search to produce file.tsv. It will then use these results to produce a similarity network (file.html). Given that no threshold was provided, it will also automatically calculate an appropriate identity threshold. See the next case for examples of using a custom threshold.
         
-        For example, to make a usable DIAMOND search:
+        ### Usage Case 2: Creat a protein network from tab seperated values using a custom threshold
+        If a .tsv containing blastp results already exists, this can be used as input. It is important that the .tsv is in the correct format. It is creates specifcially from DIAMOND using the flag `--outfmt 6 qseqid sseqid pident`. This reprisents a three column table consisting of: the query sequence id, the subject query id and the percentage identity. 
         
-        `diamond makedb --db example --in example.faa`
+        If you do not want `networker` to calculate a threshold, you can provide a custom threshold using the flag `-th` or `--threshold`. The threshold is contained as a float.
         
-        `diamond blastp --db example --query example.faa --out example.tsv --outfmt 6 qseqid sseqid pident`
+        `networker --tsv file.tsv --threshold 75.25`
         
-        All steps are currently automatic, including thresholding. However, the recommended threshold should work for most putposes. In future, you will be able to provide a custom threshold.
+        ### Usage Case 3: Print histogram and a list of nodes
+        To produce a histogram showing the cummulative number of edges versus identity threshold add the flag `-hi` or `--histogram`. This can aid in deciding suitable thresholds for your dataset. To print a list of nodes from the network add the flag `-nl` or `--node_list`.
         
-        ### 2. subnetworker.py 
-        WIP
+        Therefore:
         
-        ### 3. histogramer.py
-        WIP
+        `networker --faa file.faa -hi -nl`
+        
+        will produce file.tsv, file.dmnd and file.html as above, but also the node list (file.txt) and the histogram (histogram_file.html).
+        
+        ### Usage Case 4: Generate sub-networks form a list of nodes
+        
+        You can also use `networker` to produce individual networks and node lists for each subwork in a given network by providing a list of node names using the `-n` or `node` flag. 
+        
+        `networker --tsv file.tsv -n node1 node2 node3 -nl`
+        
+        This will produce a network based on file.tsv (file.html), individual networks for each subnetwork containing the specified nodes (node1.hmtl, node2.hmtl and node3.hmtl) and, node lists for the individual nodes and the whole network (file.txt, node1.txt, node2.txt and node3.txt).
+        
+        ### Usage Case 5: Custom Colouring of Nodes
+        Coming in version 0.3.0; work in progress.
         
         ## Example Data
         Example data and output can be found in the example_data folder. The file example.faa was used to generate the DIAMOND database and, subsequentally, the network ('example.html') and the node list ('example.txt').
         
         ## To Do
-        1. Enable custom thresholds.
-        2. Create 'histogramer.py' to assist with threshold analysis.
-        3. Create 'subnetworker.py' for analysing subnetworks. 
-        4. Compile into software package.
+        1. Enable custom coloring of nodes.
         
         
 Platform: UNKNOWN

@@ -1,0 +1,129 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 75%;
+            height: 100%;
+            background-color: white;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+        #config {
+            float: left;
+            width: 400px;
+            height: 600px;
+        }
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<div id = "config"></div>
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"color": "red", "font": {"color": "black"}, "id": "BGC0001337.1_lzrH1", "label": "BGC0001337.1_lzrH1", "shape": "dot", "title": "BGC0001337.1_lzrH1\u003cbr\u003e5 neighbors:\u003cbr\u003eBGC0001569.1_SNOUR_12610\u003cbr\u003eBGC0001814.1_ulm24\u003cbr\u003eBGC0001333.1_abeH\u003cbr\u003eBGC0001334.1_claH\u003cbr\u003eBGC0000439.1_AHH53512.1", "value": 5}, {"color": "red", "font": {"color": "black"}, "id": "BGC0001333.1_abeH", "label": "BGC0001333.1_abeH", "shape": "dot", "title": "BGC0001333.1_abeH\u003cbr\u003e5 neighbors:\u003cbr\u003eBGC0001569.1_SNOUR_12610\u003cbr\u003eBGC0001814.1_ulm24\u003cbr\u003eBGC0001337.1_lzrH1\u003cbr\u003eBGC0001334.1_claH\u003cbr\u003eBGC0000439.1_AHH53512.1", "value": 5}, {"color": "red", "font": {"color": "black"}, "id": "BGC0001334.1_claH", "label": "BGC0001334.1_claH", "shape": "dot", "title": "BGC0001334.1_claH\u003cbr\u003e6 neighbors:\u003cbr\u003eBGC0001782.1_ARP51747.1\u003cbr\u003eBGC0001569.1_SNOUR_12610\u003cbr\u003eBGC0001814.1_ulm24\u003cbr\u003eBGC0001333.1_abeH\u003cbr\u003eBGC0001337.1_lzrH1\u003cbr\u003eBGC0000439.1_AHH53512.1", "value": 6}, {"color": "red", "font": {"color": "black"}, "id": "BGC0001569.1_SNOUR_12610", "label": "BGC0001569.1_SNOUR_12610", "shape": "dot", "title": "BGC0001569.1_SNOUR_12610\u003cbr\u003e5 neighbors:\u003cbr\u003eBGC0001814.1_ulm24\u003cbr\u003eBGC0001333.1_abeH\u003cbr\u003eBGC0001337.1_lzrH1\u003cbr\u003eBGC0001334.1_claH\u003cbr\u003eBGC0000439.1_AHH53512.1", "value": 5}, {"color": "red", "font": {"color": "black"}, "id": "BGC0001814.1_ulm24", "label": "BGC0001814.1_ulm24", "shape": "dot", "title": "BGC0001814.1_ulm24\u003cbr\u003e5 neighbors:\u003cbr\u003eBGC0001569.1_SNOUR_12610\u003cbr\u003eBGC0001333.1_abeH\u003cbr\u003eBGC0001337.1_lzrH1\u003cbr\u003eBGC0001334.1_claH\u003cbr\u003eBGC0000439.1_AHH53512.1", "value": 5}, {"color": "red", "font": {"color": "black"}, "id": "BGC0000439.1_AHH53512.1", "label": "BGC0000439.1_AHH53512.1", "shape": "dot", "title": "BGC0000439.1_AHH53512.1\u003cbr\u003e5 neighbors:\u003cbr\u003eBGC0001569.1_SNOUR_12610\u003cbr\u003eBGC0001814.1_ulm24\u003cbr\u003eBGC0001333.1_abeH\u003cbr\u003eBGC0001337.1_lzrH1\u003cbr\u003eBGC0001334.1_claH", "value": 5}, {"color": "red", "font": {"color": "black"}, "id": "BGC0001782.1_ARP51747.1", "label": "BGC0001782.1_ARP51747.1", "shape": "dot", "title": "BGC0001782.1_ARP51747.1\u003cbr\u003e1 neighbors:\u003cbr\u003eBGC0001334.1_claH", "value": 1}]);
+        edges = new vis.DataSet([{"from": "BGC0001337.1_lzrH1", "to": "BGC0001333.1_abeH", "value": 84.5}, {"from": "BGC0001337.1_lzrH1", "to": "BGC0001334.1_claH", "value": 77.4}, {"from": "BGC0001337.1_lzrH1", "to": "BGC0001569.1_SNOUR_12610", "value": 68.9}, {"from": "BGC0001337.1_lzrH1", "to": "BGC0001814.1_ulm24", "value": 68.0}, {"from": "BGC0001337.1_lzrH1", "to": "BGC0000439.1_AHH53512.1", "value": 65.3}, {"from": "BGC0000439.1_AHH53512.1", "to": "BGC0001333.1_abeH", "value": 64.4}, {"from": "BGC0000439.1_AHH53512.1", "to": "BGC0001569.1_SNOUR_12610", "value": 63.4}, {"from": "BGC0000439.1_AHH53512.1", "to": "BGC0001334.1_claH", "value": 65.0}, {"from": "BGC0000439.1_AHH53512.1", "to": "BGC0001814.1_ulm24", "value": 61.6}, {"from": "BGC0001569.1_SNOUR_12610", "to": "BGC0001814.1_ulm24", "value": 93.8}, {"from": "BGC0001569.1_SNOUR_12610", "to": "BGC0001334.1_claH", "value": 70.5}, {"from": "BGC0001569.1_SNOUR_12610", "to": "BGC0001333.1_abeH", "value": 67.6}, {"from": "BGC0001334.1_claH", "to": "BGC0001333.1_abeH", "value": 75.1}, {"from": "BGC0001334.1_claH", "to": "BGC0001814.1_ulm24", "value": 70.2}, {"from": "BGC0001334.1_claH", "to": "BGC0001782.1_ARP51747.1", "value": 61.2}, {"from": "BGC0001333.1_abeH", "to": "BGC0001814.1_ulm24", "value": 68.1}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": true,
+        "filter": true
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": false,
+            "type": "continuous"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "barnesHut": {
+            "avoidOverlap": 0,
+            "centralGravity": 0.3,
+            "damping": 0.09,
+            "gravitationalConstant": -80000,
+            "springConstant": 0.001,
+            "springLength": 250
+        },
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        
+        // if this network requires displaying the configure window,
+        // put it in its div
+        options.configure["container"] = document.getElementById("config");
+        
+
+        network = new vis.Network(container, data, options);
+	 
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>

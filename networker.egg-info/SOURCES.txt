@@ -7,6 +7,7 @@ networker/io.py
 networker/main.py
 networker/network.py
 networker/parser.py
+networker/plot.py
 networker.egg-info/PKG-INFO
 networker.egg-info/SOURCES.txt
 networker.egg-info/dependency_links.txt
