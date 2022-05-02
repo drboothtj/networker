@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name="networker",
-    version="0.2.2",
+    version="0.3.0",
     author="Thomas J. Booth",
     author_email="thoboo@biosustain.dtu.dk",
     packages=find_packages(),
