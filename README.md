@@ -54,8 +54,23 @@ This will produce a network based on file.tsv (file.html), individual networks f
 Coming in version 0.3.0; work in progress.
 
 ## Example Data
-Example data and output can be found in the example_data folder. The file example.faa was used to generate the DIAMOND database and, subsequentally, the network ('example.html') and the node list ('example.txt').
+The example_data contains a test data set and the outputs from networker. 
+
+The test dataset (SMCOG1119.faa) was extracted from the [MIBiG database](https://mibig.secondarymetabolites.org/). It is a collection of protein sequences reprisenting all annotated halogenases from the database. 
+
+Firstly, `networker` was run on the dataset as follows:
+
+`networker -f SMCOG119.faa -hi -nl -th 60`
+
+This ran the diamond search (SMCOG1119.dmnd and SMCOG1119.tsv) and printed the threshold histogram (histogram_SMCOG1119.html), the list of nodes in the network (SMCOG1119.txt) and the network itself (SMCOG1119.html). The console output can be viewed in log_1.txt.
+
+A second analysis was run to extract the largest subnetworks. 
+
+`networker -f SMCOG119.faa -nl -th 60 -node BGC0001288 BGC0000822 BGC0001334 BGC0001459`
+
+This will run as previously but will also output individual nodelists and networks for the nodes specified (BGC0001288.txt, BGC0001288.html, BGC0000822.html, BGC0000822.html ...).
 
 ## To Do
 1. Enable custom coloring of nodes.
+2. Select reprisentative nodes of subnetworks
 
