@@ -68,7 +68,7 @@ A second analysis was run to extract the largest subnetworks.
 
 `networker -f SMCOG119.faa -nl -th 60 -node BGC0001288 BGC0000822 BGC0001334 BGC0001459`
 
-This will run as previously but will also output individual nodelists and networks for the nodes specified (BGC0001288.txt, BGC0001288.html, BGC0000822.html, BGC0000822.html ...)
+This will run as previously but will also output individual nodelists and networks for the nodes specified (BGC0001288.txt, BGC0001288.html, BGC0000822.html, BGC0000822.html ...).
 
 ## To Do
 1. Enable custom coloring of nodes.
