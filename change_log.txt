@@ -1,3 +1,4 @@
 networker version 0.3.0
+-updated readme
 -added change log
 -fixed subnetwork bug
