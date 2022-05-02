@@ -1,4 +1,9 @@
-networker version 0.3.0
+networker 
+version 0.2.3
+-fixed subnetworking bug
+-fixed poorly named variables in network.py
+
+version 0.2.2
 -updated readme
 -added change log
 -fixed subnetwork bug

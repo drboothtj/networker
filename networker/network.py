@@ -59,9 +59,9 @@ def get_subnetwork_nodes(node, network):
     new_length = 2
     while old_length != new_length:
         old_length = new_length
-        for noi in node_list:
-            for neighbour in neighbor_map[noi]:
+        for node_of_interest in node_list:
+            for neighbour in neighbor_map[node_of_interest]:
                 if neighbour not in node_list:
-                    node_list.append(n)
+                    node_list.append(neighbour)
         new_length = len(node_list)
     return node_list
